@@ -62,7 +62,7 @@ class IPRSpider(scrapy.Spider):
         self.logger.info('A response from %s just arrived! status:%s pageindex:%s'%(response.url,response.status, response.meta['start']))  
        
         pageindex = int(response.meta['start'])
-        next_page_index = str((pageindex if pageindex!=0 else 320) +10)
+        next_page_index = str((pageindex if pageindex!=0 else 510) +10)
         
         item = {}
         
