@@ -1,0 +1,50 @@
+# -*- coding: utf-8 -*-
+import scrapy
+import re
+
+from scrapy.contrib.spiders import CrawlSpider,Rule 
+from myspider.mongo import mongoDbContext  
+
+class MySpider(CrawlSpider):
+    name = "MySpider"
+    
+    def __init__(self,rule):
+        self.rule = rule
+        self.name = rule.name
+        self.allowed_domains = rule.allowed_domains.split("|")
+        self.start_urls = rule.start_urls.split("|")
+        self.rules = self.parse_rules(rule)
+        
+        super(MySpider,self).__init__()
+        
+        
+     def parse_rules(self,rule):
+        _rule_list = []
+        
+        if rule.next_page and rule.next_page!='':
+            _next_page_extractorRule = Rule(LinkExtractor(restrict_xpats = rule.next_page)
+            _rule_list.append(_extractorRule)
+            
+        _content_extractorRule = Rule(LinkExtractor(allow = [rule.allow_url]),callback = 'parse_item')
+                                       
+        _rule_list.append(_content_extractorRule)
+        
+        return tuple(_rule_list)
+        
+        
+     def parse_item(self,response):
+        item={'fromUrl':response.url,'status':response.status}  
+        if self.rule["snapshot"]=="true":
+            item["snapshot"] = response.read()
+            
+        fields = self.rule['content']
+        for k in fields.keys(): 
+            if self.rule.findMode=="xpath":
+                value = response.xpath(fields[k]).extract()
+            else :
+                value = response.css(fields[k]).extract()
+                    
+            item[k] = value
+        
+        return item
+        

@@ -1,0 +1,17 @@
+import routes
+
+@routes.route("/","views/")
+class IndexRequestHander(routes.RequestHandler):
+    def get(self):
+        self.render("index.html")
+    
+    def post(self):
+        pass
+        
+@routes.route("/","views/")      
+class SpiderRequestHandler(routes.RequestHandler):
+    def get(self):
+        pass
+        
+    def post(self):
+        pass

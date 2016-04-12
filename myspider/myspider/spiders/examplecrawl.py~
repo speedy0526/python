@@ -1,0 +1,14 @@
+# -*- coding: utf-8 -*-
+import scrapy 
+import re
+
+class MySpider(scrapy.Spider): 
+    name='customspider'
+    start_urls=[]
+    
+    def parse(self,response):
+        pass
+        
+    def parse_page(self,response):
+        pass
+        

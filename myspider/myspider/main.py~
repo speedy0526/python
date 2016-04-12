@@ -1,0 +1,51 @@
+# -*- coding: utf-8 -*-
+import sys
+sys.path.append(u"/home/leo/桌面/python/myspider".encode("utf-8","ignore"))
+
+from myspider.mongo import mongoDbContext
+from myspider.spiders.dynamicspider import MySpider 
+
+import logging 
+from scrapy import signals
+from twisted.internet import reactor
+from scrapy.crawler import CrawlerProcess,CrawlerRunner  
+from scrapy.utils.project import get_project_settings
+ 
+class CrawlRule:
+    def __init__(name,start_urls,allowed_domains,allowed_urls,findMode,content,snapshot,nextpage):
+        self.name = name
+        self.start_urls = start_urls
+        self.allowed_domains = allowed_domains
+        self.allowed_urls = allowed_urls
+        self.findMode = findMode
+        self.content = content
+        self.snapshot = snapshot
+        self.next_page = nextpage
+
+fileds={}
+fileds["title"]="//div[class='il_txt']/h4/text()"
+fileds["content"]="//div[id='thread_content']/text()"
+
+rule = CrawlRule("sinaBlog",
+                ["http://guba.sina.com.cn/?s=bar&bid=14247"],
+                ["sina.com","sina.com.cn"],
+                ["http://guba.sina.com.cn/\?s=bar&(bid=\d+|name=\S+)","http://guba.sina.com.cn/\?s=thread&tid=\d+&bid=\d+"],
+                "xpath",
+                fileds,
+                True,
+                "//a[text()='下一页']/@href")
+
+rules = []
+rules.append(rule)
+ 
+runner = CrawlerRunner()
+    
+for rule in rules:  
+    logging.warning(rule)
+    runner.crawl(MySpider,rule = rule)
+
+d = runner.join()
+d.addBoth(lambda _: reactor.stop())
+
+reactor.run()
+

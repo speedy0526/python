@@ -1,0 +1,31 @@
+import scrapy
+from scrapy.spiders import CrawlSpider,Rule 
+from scrapy.linkextractors import LinkExtractor
+ 
+class BroadSpider(CrawlSpider): 
+
+     def __init__(self,*args,**kwargs):   
+         self.name = kwargs["name"]
+         self.login_page = kwargs["login_page"] if kwargs.has_key("login_page") else ""
+         self.login_account = kwargs["login_account"] if kwargs.has_key("login_account") else ""
+         self.start_urls = kwargs["start_urls"]
+         self.allow_domains = kwargs["allow_domains"]
+         self.rules = tuple(kwargs["rules"]) 
+
+         super(BroadSpider, self).__init__(*args, **kwargs)
+    
+     def start_request(self): 
+         if self.login_page != None and self.login_page != "": 
+             return Request(url=self.login_page, callback=self.login)
+
+         return super(BroadSpider,self).start_requests()
+       
+     def login(self,response):
+         return FormRequest.from_response(response,formdata=self.login_account if self.login_account != None else {},callback=self.check_login_response)
+
+     def check_login_response(self):
+         pass
+
+     def parse_item(self,response,**kwargs):
+         self.log("response url:%s" % response.url)
+         self.log("params:%s",kwargs["content"])

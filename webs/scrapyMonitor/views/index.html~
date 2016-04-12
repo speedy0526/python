@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+<h3>Scrapy Spider.</h3>
+<hr />
+<table class="table table-striped">
+  <thead class="thead-default">
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Start Date</th> 
+      <th>Status</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for i in range(10) %}
+        <tr>
+          <th scope="row">1</th>
+          <td>Mark{{i}}</td>
+          <td>Otto{{i}}</td>
+          <td>@mdo{{i}}</td>
+          <td>
+              <a href="#"><i class="fa fa-play"></i></a>
+              <a href="#"><i class="fa fa-pause"></i></a>
+              <a href="#"><i class="fa fa-stop"></i></a>
+          </td>
+        </tr> 
+    {% end %}
+  </tbody>
+</table>
+ {% end %}
