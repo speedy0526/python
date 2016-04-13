@@ -15,3 +15,6 @@ class mongoDbContext:
         
     def findOne(self,name,fileter):
         return self.db[name].find_one(filter)
+        
+    def count(self,name):
+        return self.db[name].count()

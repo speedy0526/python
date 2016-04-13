@@ -1,5 +1,5 @@
-{% extends "layout.html" %}
-{% block content %}
+<%inherit file="layout.html" />
+ 
 <h3>Scrapy Spider.</h3>
 <hr />
 <table class="table table-striped">
@@ -13,19 +13,18 @@
     </tr>
   </thead>
   <tbody>
-    {% for i in range(10) %}
+    % for i in range(10):
         <tr>
-          <th scope="row">1</th>
-          <td>Mark{{i}}</td>
-          <td>Otto{{i}}</td>
-          <td>@mdo{{i}}</td>
+          <th scope="row">{{ i+1 }}</th>
+          <td>Mark${i}</td>
+          <td>Otto${i}</td>
+          <td>@mdo${i}</td>
           <td>
               <a href="#"><i class="fa fa-play"></i></a>
               <a href="#"><i class="fa fa-pause"></i></a>
               <a href="#"><i class="fa fa-stop"></i></a>
           </td>
         </tr> 
-    {% end %}
+    % endfor
   </tbody>
-</table>
- {% end %}
+</table> 

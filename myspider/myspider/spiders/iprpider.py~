@@ -3,6 +3,7 @@
 import scrapy
 import logging 
 import myspider.utils
+from myspider.mongo import mongoDbContext
 
 class IPRSpider(scrapy.Spider):
     name = "IPRSpider"
@@ -57,12 +58,17 @@ class IPRSpider(scrapy.Spider):
             details.append(detail)
         
         return details
-                                        
+        
+    def get_last_page_index(self):
+        db = mongoDbContext()
+        return db.count("IPRData")*10
+        
+                                           
     def parse_content(self,response,**kwargs):
         self.logger.info('A response from %s just arrived! status:%s pageindex:%s'%(response.url,response.status, response.meta['start']))  
        
         pageindex = int(response.meta['start'])
-        next_page_index = str((pageindex if pageindex!=0 else 510) +10)
+        next_page_index = str((pageindex if pageindex!=0 else 1000) +10)
         
         item = {}
         

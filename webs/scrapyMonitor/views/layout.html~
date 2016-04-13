@@ -4,8 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{% block title %}Test{% end %} - My Tornado Application</title> 
-<!--    <link rel="stylesheet" type="text/css" href="{{ static_url("css/bootstrap.min.css") }}">-->  
+    <title>Test- My Tornado Application</title>  
     <style type="text/css"> 
         body {
           padding-top: 70px;
@@ -17,7 +16,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-dark navbar-fixed-top bg-inverse">
+    <nav class="navbar navbar-dark navbar-fixed-top bg-primary">
     <div class="container">
       <button type="button" class="navbar-toggler visible-xs" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
         <span class="sr-only">Toggle navigation</span>
@@ -37,8 +36,8 @@
       </form>
     </div>
     </nav>
-    <div class="container">
-        {% block content %}{% end %}
+    <div class="container"> 
+         ${self.body()}
         <hr/>
         <footer>
             <p>&copy; 2016 - My Tornado Application</p>
@@ -46,9 +45,7 @@
     </div>
     <script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script> 
     <script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
-<!--    <script src="{{ static_url('js/bootstrap.min.js') }}"></script>-->
-    {% block scripts %}{% end %}
-
+<!--    <%block name="scripts" />-->
 </body>
 </html>
 

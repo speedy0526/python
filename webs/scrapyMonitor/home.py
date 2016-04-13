@@ -1,7 +1,8 @@
+# -*- coding: utf-8 -*-
 import routes
 from routes import route
 
-@route("/","views/")
+@route("/","views")
 class IndexRequestHander(routes.RequestHandler):
     def get(self):
         self.render("index.html")
@@ -9,10 +10,10 @@ class IndexRequestHander(routes.RequestHandler):
     def post(self):
         pass
         
-@route("/","views/")      
+@route("/spider","views/spider/")      
 class SpiderRequestHandler(routes.RequestHandler):
     def get(self):
-        pass
+        self.render("index.html")
         
     def post(self):
         pass
